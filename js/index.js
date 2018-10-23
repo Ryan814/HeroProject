@@ -42,7 +42,7 @@ class BaseCharacter {
   }
 
   die() {
-    this.alive == false;
+    this.alive = false;
   }
   updateHtml(hpElement, hurtElement) {
     hpElement.textContent = this.hp;
@@ -116,6 +116,7 @@ function endTurn() {
   document.getElementById("round-num").textContent = rounds;
   if (rounds < 1) {
     //遊戲結束
+    finish();
   }
 }
 
@@ -139,12 +140,24 @@ function heroAttack() {
         endTurn();
         if (hero.alive == false) {
           //遊戲結束
+          finish();
         } else {
           document.getElementsByClassName("skill-block")[0].style.display = "block";
         }
       }, 500);
     } else {
       //遊戲結束
+      finish();
     }
   }, 1100);
+}
+
+function finish() {
+  var dialog = document.getElementById("dialog");
+  dialog.style.display = "block";
+  if (monster.alive == false) {
+    dialog.classList.add("win");
+  } else {
+    dialog.classList.add("lose");
+  }
 }
