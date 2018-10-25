@@ -72,6 +72,15 @@ class Hero extends BaseCharacter {
     super.getHurt(damage);
     this.updateHtml(this.hpElement, this.hurtElement);
   }
+  heal() {
+    if (this.maxHp - this.hp >= 30) {
+      this.hp += 30;
+      this.updateHtml(this.hpElement, this.hurtElement);
+    } else if (this.maxHp - this.hp < 30) {
+      this.hp += (this.maxHp - this.hp);
+      this.updateHtml(this.hpElement, this.hurtElement);
+    }
+  }
 }
 
 class Monster extends BaseCharacter {
@@ -108,6 +117,14 @@ function addSkillEvent() {
   }
 }
 addSkillEvent();
+
+function addHealEvent() {
+  var heal = document.getElementById("heal");
+  heal.onclick = function() {
+    heroHeal();
+  }
+}
+addHealEvent();
 
 var rounds = 10;
 
@@ -150,6 +167,12 @@ function heroAttack() {
       finish();
     }
   }, 1100);
+}
+
+function heroHeal() {
+  document.getElementsByClassName("skill-block")[0].style.dispaly = "none"
+
+  hero.heal();
 }
 
 function finish() {
